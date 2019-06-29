@@ -1,9 +1,8 @@
-const express = require("express");
-const knex = require("knex");
-const knexConfig = require("./knexfile.js");
+require("dotenv").config();
 
+const server = require("./api/server.js");
+
+const port = process.env.PORT || 5000;
 const environment = process.env.DB_ENV || "development";
 
-console.log("db env:", environment);
-
-module.exports = knex(config[environment]);
+server.listen(port, () => console.log(`\n** server up on port ${port} **\n`));
