@@ -21,3 +21,22 @@ describe("the students model", () => {
     expect(student).toEqual({ name: "bruh", id: 1, favColor: "magenta" });
   });
 });
+
+describe("findByID()", () => {
+  afterEach(async () => {
+    await db("students").truncate();
+  });
+  it("finds a student by id", async () => {
+    await db("students").insert([
+      { name: "fuckwad", favColor: "cerulean" },
+      { name: "buggo", favColor: "blood" },
+      { name: "skitty", favColor: "crimson" }
+    ]);
+    const student = await Students.findById(2);
+    expect(student.name).toBe("buggo");
+  });
+  it("returns null on an invalid id", async () => {
+    const student = await Students.findById(69);
+    expect(student).toBeUndefined();
+  });
+});
